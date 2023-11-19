@@ -1,6 +1,7 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
-import org.junit.jupiter.api.BeforeAll;
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,28 +14,21 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 
-public class SimpleParametrizedWebTest {
+public class SimpleParametrizedWebTest extends TestBase{
 
-    @BeforeAll
-    static void beforeAll() {
-        Configuration.baseUrl = "https://www.moex.com";
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "eager";
-        open("https://www.moex.com/");
-    }
 
     static Stream<Arguments> findButtonsTest() {
         return Stream.of(
                 arguments(List.of("Markets", "Indices", "Market data", "Listing", "Connectivity", "News and events", "About MOEX", "Investor Relations")),
                 arguments(List.of("Продукты и услуги", "Биржевая информация", "Документы", "Обучение", "Медиа", "О компании"))
 
-
         );
     }
 
     @MethodSource
     @ParameterizedTest
+    @DisplayName("Проверка наличия кнопок Входа и Регистрации мультиланг")
+    @Tag("Localization")
     void findButtonsTest(List<String> expectedButtons) {
 
 
@@ -48,4 +42,5 @@ public class SimpleParametrizedWebTest {
 
 
     }
+
 }
